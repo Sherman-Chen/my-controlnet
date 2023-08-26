@@ -217,7 +217,7 @@ def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None], ca
                     cv2.line(canvas, (x1, y1), (x2, y2), color, thickness=value)
             
 
-    for index,keypoint in keypoints:
+    for index,keypoint in enumerate(keypoints):
         if keypoint is None:
             continue
 
