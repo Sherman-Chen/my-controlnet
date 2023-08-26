@@ -32,17 +32,17 @@ HAND_PINKY_FINGER_CONNECTIONS = ((17, 18), (18, 19), (19, 20))
 
 _HAND_CONNECTION_STYLE = {
     HAND_PALM_CONNECTIONS:
-        (color=_GRAY, thickness=3),
+        (_GRAY, 3),
     HAND_THUMB_CONNECTIONS:
-        (color=_PEACH, thickness=2),
+        (_PEACH, 2),
     HAND_INDEX_FINGER_CONNECTIONS:
-        (color=_PURPLE, thickness=2),
+        (_PURPLE, 2),
     HAND_MIDDLE_FINGER_CONNECTIONS:
-        (color=_YELLOW, thickness=2),
+        (_YELLOW, 2),
     HAND_RING_FINGER_CONNECTIONS:
-        (color=_GREEN, thickness=2),
+        (_GREEN, 2),
     HAND_PINKY_FINGER_CONNECTIONS:
-        (color=_BLUE, thickness=2)
+        (_BLUE, 2)
 }
 
 def smart_resize(x, s):
