@@ -23,6 +23,28 @@ _LEFT = (255, 255, 255)
 _RIGHT = (251, 206, 177)
 HAND_STYLE = [_LEFT,_PEACH,_PEACH,_PEACH,_PEACH,_PURPLE,_PURPLE,_PURPLE,_PURPLE,_YELLOW,_YELLOW,_YELLOW,_YELLOW,_GREEN,_GREEN,_GREEN,_GREEN,_BLUE,_BLUE,_BLUE,_BLUE]
 
+HAND_PALM_CONNECTIONS = ((0, 1), (0, 5), (9, 13), (13, 17), (5, 9), (0, 17))
+HAND_THUMB_CONNECTIONS = ((1, 2), (2, 3), (3, 4))
+HAND_INDEX_FINGER_CONNECTIONS = ((5, 6), (6, 7), (7, 8))
+HAND_MIDDLE_FINGER_CONNECTIONS = ((9, 10), (10, 11), (11, 12))
+HAND_RING_FINGER_CONNECTIONS = ((13, 14), (14, 15), (15, 16))
+HAND_PINKY_FINGER_CONNECTIONS = ((17, 18), (18, 19), (19, 20))
+
+_HAND_CONNECTION_STYLE = {
+    HAND_PALM_CONNECTIONS:
+        (color=_GRAY, thickness=3),
+    HAND_THUMB_CONNECTIONS:
+        (color=_PEACH, thickness=2),
+    HAND_INDEX_FINGER_CONNECTIONS:
+        (color=_PURPLE, thickness=2),
+    HAND_MIDDLE_FINGER_CONNECTIONS:
+        (color=_YELLOW, thickness=2),
+    HAND_RING_FINGER_CONNECTIONS:
+        (color=_GREEN, thickness=2),
+    HAND_PINKY_FINGER_CONNECTIONS:
+        (color=_BLUE, thickness=2)
+}
+
 def smart_resize(x, s):
     Ht, Wt = s
     if x.ndim == 2:
@@ -190,7 +212,10 @@ def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None], ca
         x2 = int(k2.x * W)
         y2 = int(k2.y * H)
         if x1 > eps and y1 > eps and x2 > eps and y2 > eps:
-            cv2.line(canvas, (x1, y1), (x2, y2), matplotlib.colors.hsv_to_rgb([ie / float(len(edges)), 1.0, 1.0]) * 255, thickness=2)
+            for connections, (color, value) in _HAND_CONNECTION_STYLE.items():
+                if edge in connections:
+                    cv2.line(canvas, (x1, y1), (x2, y2), color, thickness=value)
+            
 
     for index,keypoint in keypoints:
         if keypoint is None:
