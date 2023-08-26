@@ -8,6 +8,20 @@ from .body import BodyResult, Keypoint
 
 eps = 0.01
 
+_RADIUS = 5
+_RED = (48, 48, 255)
+_GREEN = (48, 255, 48)
+_BLUE = (192, 101, 21)
+_YELLOW = (0, 204, 255)
+_GRAY = (128, 128, 128)
+_PURPLE = (128, 64, 128)
+_PEACH = (180, 229, 255)
+_WHITE = (224, 224, 224)
+_CYAN = (192, 255, 48)
+_MAGENTA = (192, 48, 255)
+_LEFT = (255, 255, 255)
+_RIGHT = (251, 206, 177)
+HAND_STYLE = [_LEFT,_PEACH,_PEACH,_PEACH,_PEACH,_PURPLE,_PURPLE,_PURPLE,_PURPLE,_YELLOW,_YELLOW,_YELLOW,_YELLOW,_GREEN,_GREEN,_GREEN,_GREEN,_BLUE,_BLUE,_BLUE,_BLUE]
 
 def smart_resize(x, s):
     Ht, Wt = s
@@ -139,7 +153,7 @@ def draw_bodypose(canvas: np.ndarray, keypoints: List[Keypoint]) -> np.ndarray:
     return canvas
 
 
-def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None]) -> np.ndarray:
+def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None], categoryName = "left") -> np.ndarray:
     """
     Draw keypoints and connections representing hand pose on a given canvas.
 
@@ -178,7 +192,7 @@ def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None]) ->
         if x1 > eps and y1 > eps and x2 > eps and y2 > eps:
             cv2.line(canvas, (x1, y1), (x2, y2), matplotlib.colors.hsv_to_rgb([ie / float(len(edges)), 1.0, 1.0]) * 255, thickness=2)
 
-    for keypoint in keypoints:
+    for index,keypoint in keypoints:
         if keypoint is None:
             continue
 
@@ -186,7 +200,10 @@ def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None]) ->
         x = int(x * W)
         y = int(y * H)
         if x > eps and y > eps:
-            cv2.circle(canvas, (x, y), 4, (0, 0, 255), thickness=-1)
+            if index == 0:
+                cv2.circle(canvas, (x, y), 5, _LEFT if categoryName == "left" else _RIGHT, thickness=-1)
+                continue
+            cv2.circle(canvas, (x, y), 5, HAND_STYLE[index], thickness=-1)
     return canvas
 
 
