@@ -213,7 +213,7 @@ def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None], ca
         y2 = int(k2.y * H)
         if x1 > eps and y1 > eps and x2 > eps and y2 > eps:
             for connections, (color, value) in _HAND_CONNECTION_STYLE.items():
-                if edge in connections:
+                if (e1,e2) in connections:
                     cv2.line(canvas, (x1, y1), (x2, y2), color, thickness=value)
             
 
