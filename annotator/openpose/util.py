@@ -226,7 +226,7 @@ def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None], ca
         x = int(x * W)
         y = int(y * H)
         if x > eps and y > eps:
-            if index == 0 || index == 1 || index == 5 || index == 9 || index == 13 || index == 17:
+            if index == 0 or index == 1 or index == 5 or index == 9 or index == 13 or index == 17:
                 cv2.circle(canvas, (x, y), 6, (224,224,224) , thickness=-1)
                 cv2.circle(canvas, (x, y), 5, _LEFT if categoryName == "left" else _RIGHT, thickness=-1)
                 continue
