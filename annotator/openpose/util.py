@@ -19,8 +19,9 @@ _PEACH = (180, 229, 255)
 _WHITE = (224, 224, 224)
 _CYAN = (192, 255, 48)
 _MAGENTA = (192, 48, 255)
-_LEFT = (255, 255, 255)
-_RIGHT = (251, 206, 177)
+#mediapipe是镜像的
+_LEFT = (251, 206, 177)
+_RIGHT = (255, 255, 255)
 HAND_STYLE = [_LEFT,_PEACH,_PEACH,_PEACH,_PEACH,_PURPLE,_PURPLE,_PURPLE,_PURPLE,_YELLOW,_YELLOW,_YELLOW,_YELLOW,_GREEN,_GREEN,_GREEN,_GREEN,_BLUE,_BLUE,_BLUE,_BLUE]
 
 HAND_PALM_CONNECTIONS = ((0, 1), (0, 5), (9, 13), (13, 17), (5, 9), (0, 17))
@@ -199,7 +200,7 @@ def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None], ca
         H, W, _ = canvas.shape
 
     edges = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8], [0, 9], [9, 10], \
-             [10, 11], [11, 12], [0, 13], [13, 14], [14, 15], [15, 16], [0, 17], [17, 18], [18, 19], [19, 20]]
+             [10, 11], [11, 12], [0, 13], [13, 14], [14, 15], [15, 16], [0, 17], [17, 18], [18, 19], [19, 20],[5,9],[9,13],[13,17]]
 
     for ie, (e1, e2) in enumerate(edges):
         k1 = keypoints[e1]
@@ -225,9 +226,11 @@ def draw_handpose(canvas: np.ndarray, keypoints: Union[List[Keypoint], None], ca
         x = int(x * W)
         y = int(y * H)
         if x > eps and y > eps:
-            if index == 0:
+            if index == 0 || index == 1 || index == 5 || index == 9 || index == 13 || index == 17:
+                cv2.circle(canvas, (x, y), 6, (224,224,224) , thickness=-1)
                 cv2.circle(canvas, (x, y), 5, _LEFT if categoryName == "left" else _RIGHT, thickness=-1)
                 continue
+            cv2.circle(canvas, (x, y), 6, (224,224,224) ,thickness=-1)
             cv2.circle(canvas, (x, y), 5, HAND_STYLE[index], thickness=-1)
     return canvas
 
