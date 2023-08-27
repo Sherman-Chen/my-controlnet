@@ -79,10 +79,12 @@ class Wholebody:
             return pose_results
 
         for instance in keypoints_info:
-            body_keypoints = format_keypoint_part(instance[:18]) or ([None] * 18)
+            #body_keypoints = format_keypoint_part(instance[:18]) or ([None] * 18)
+            #body_keypoints = ([None] * 18)
             left_hand = format_keypoint_part(instance[92:113])
             right_hand = format_keypoint_part(instance[113:134])
-            face = format_keypoint_part(instance[24:92])
+            #face = format_keypoint_part(instance[24:92])
+            face = None
 
             # Openpose face consists of 70 points in total, while DWPose only
             # provides 68 points. Padding the last 2 points.
